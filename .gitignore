@@ -1,0 +1,5 @@
+bin/
+sootOutput/
+soot-trunk.jar
+sootjavadoc-trunk.jar
+sootsources-trunk.jar
