@@ -128,12 +128,11 @@ public class JitRunner implements JettyRunner {
             case BITWISE_AND:       result = J.newAndExpr(x, y); break;
             case BITWISE_ANDN:      result = J.newAndExpr(x, asImm(body, J.newXorExpr(y, IntConstant.v(-1)))); break;
             case BITWISE_OR:        result = J.newOrExpr(x, y); break;
+            case BITWISE_ORN:       result = J.newXorExpr(x, asImm(body, J.newOrExpr(y, IntConstant.v(-1)))); break;
             case BITWISE_XOR:       result = J.newXorExpr(x, y); break;
-            case BITWISE_XORN:      result = J.newXorExpr(x, asImm(body, J.newXorExpr(y, IntConstant.v(-1)))); break;
 
             case COMPARE_EQ:
             case COMPARE_GE:
-            case COMPARE_NE:
             case COMPARE_LT: {
                 CmpExpr compared = J.newCmpExpr(asImm(body, J.newCastExpr(x, LongType.v())),
                         asImm(body, J.newCastExpr(y, LongType.v())));
@@ -143,6 +142,8 @@ public class JitRunner implements JettyRunner {
                 break;
             }
 
+            case TEST_BIT:
+                result = J.newNegExpr(asImm(body, J.newAndExpr(asImm(body, J.newUshrExpr(x, y)), IntConstant.v(1))));
             case PACK: {
                 result = J.newOrExpr(
                         asImm(body, J.newShlExpr(x, IntConstant.v(12))),
