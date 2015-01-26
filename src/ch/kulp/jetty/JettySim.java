@@ -66,15 +66,15 @@ class JettyInterp implements JettyRunner {
             case BITWISE_AND:       rhs = (e2  &  e1) + e0; break;
             case BITWISE_ANDN:      rhs = (e2  &~ e1) + e0; break;
             case BITWISE_OR:        rhs = (e2  |  e1) + e0; break;
+            case BITWISE_ORN:       rhs = (e2  |~ e1) + e0; break;
             case BITWISE_XOR:       rhs = (e2  ^  e1) + e0; break;
-            case BITWISE_XORN:      rhs = (e2  ^~ e1) + e0; break;
 
             case COMPARE_LT:        rhs = ((e2 <  e1) ? -1 : 0) + e0; break;
             case COMPARE_EQ:        rhs = ((e2 == e1) ? -1 : 0) + e0; break;
             case COMPARE_GE:        rhs = ((e2 >= e1) ? -1 : 0) + e0; break;
-            case COMPARE_NE:        rhs = ((e2 != e1) ? -1 : 0) + e0; break;
 
             case PACK:              rhs = (e2 << 12) | (e1 & ~(-1 << 12)) + e0; break;
+            case TEST_BIT:          rhs = (((e2 & (1 << e1)) != 0) ? -1 : 0) + e0; break;
         }
         // @formatter:on
 
