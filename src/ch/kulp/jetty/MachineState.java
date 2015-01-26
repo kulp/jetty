@@ -5,6 +5,7 @@ import static ch.kulp.jetty.Operation.COMPARE_GE;
 import static ch.kulp.jetty.Operation.COMPARE_LT;
 
 import java.util.TreeMap;
+import java.util.function.Function;
 
 public final class MachineState {
     static final int PAGESIZE = 0x1000;
@@ -25,18 +26,18 @@ public final class MachineState {
         cmpTable[(COMPARE_GE.val << 2) + +1] = -1;
     }
 
-    // TODO Device instead of just blocks of memory
-    TreeMap<Integer, int[]> mem = new TreeMap<Integer, int[]>();
+    TreeMap<Integer, MappedDevice> memoryMap = new TreeMap<Integer, MappedDevice>();
 
     public int fetch(int addr) {
-        return vivifyBlock(addr)[addr & (PAGESIZE - 1)];
+        return vivifyBlock(addr).fetch(addr & (PAGESIZE - 1));
     }
 
     public void store(int addr, int rhs) {
-        vivifyBlock(addr)[addr & (PAGESIZE - 1)] = rhs;
+        vivifyBlock(addr).store(addr & (PAGESIZE - 1), rhs);
     }
 
-    private int[] vivifyBlock(int addr) {
-        return mem.computeIfAbsent(addr & ~(PAGESIZE - 1), k -> new int[PAGESIZE]);
+    private MappedDevice vivifyBlock(int addr) {
+        Function<Integer, MappedDevice> lambda = k -> new MappedMemory(addr & (PAGESIZE - 1), PAGESIZE);
+        return memoryMap.computeIfAbsent(addr & ~(PAGESIZE - 1), lambda);
     }
 }

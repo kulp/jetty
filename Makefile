@@ -6,6 +6,7 @@ RUNFILE  = fib.texe
 all: bin/$(PACKAGE)/JettySim.class
 
 bin/$(PACKAGE)/JettySim.class   : src/$(PACKAGE)/Operation.java
+bin/$(PACKAGE)/JettySim.class   : src/$(PACKAGE)/devices/VGATextDevice.java
 bin/$(PACKAGE)/JettySim.class   : src/$(PACKAGE)/JitRunner.java
 bin/$(PACKAGE)/BasicBlock.class : src/$(PACKAGE)/MachineState.java
 bin/$(PACKAGE)/BasicBlock.class : src/$(PACKAGE)/JettySim.java
