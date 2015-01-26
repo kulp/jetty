@@ -3,7 +3,6 @@ package ch.kulp.jetty;
 import static ch.kulp.jetty.Operation.COMPARE_EQ;
 import static ch.kulp.jetty.Operation.COMPARE_GE;
 import static ch.kulp.jetty.Operation.COMPARE_LT;
-import static ch.kulp.jetty.Operation.COMPARE_NE;
 
 import java.util.TreeMap;
 
@@ -24,10 +23,6 @@ public final class MachineState {
         cmpTable[(COMPARE_GE.val << 2) + -1] =  0;
         cmpTable[(COMPARE_GE.val << 2) +  0] = -1;
         cmpTable[(COMPARE_GE.val << 2) + +1] = -1;
-        // NE : -1, 0, 1 -> -1,  0, -1
-        cmpTable[(COMPARE_NE.val << 2) + -1] = -1;
-        cmpTable[(COMPARE_NE.val << 2) +  0] =  0;
-        cmpTable[(COMPARE_NE.val << 2) + +1] = -1;
     }
 
     // TODO Device instead of just blocks of memory
