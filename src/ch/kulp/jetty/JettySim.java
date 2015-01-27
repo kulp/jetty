@@ -37,7 +37,6 @@ class JettyInterp implements JettyRunner {
         int e0 = 0, e1 = 0, e2 = 0;
         switch (insn.type) {
             case 0:
-            case 3:
                 e0 = insn.I;
                 e1 = ms.regs[insn.Y];
                 e2 = ms.regs[insn.X];
@@ -51,6 +50,11 @@ class JettyInterp implements JettyRunner {
                 e0 = ms.regs[insn.Y];
                 e1 = ms.regs[insn.X];
                 e2 = insn.I;
+                break;
+            case 3:
+                e0 = insn.I;
+                e1 = 0;
+                e2 = 0;
                 break;
         }
 

@@ -97,7 +97,6 @@ public class Instruction {
         insn.type = (word >> 30) & 0x3;
         insn.dd = (word >> 28) & 0x3;
         insn.Z = (word >> 24) & 0xf;
-        insn.op = Operation.BITWISE_OR;
         switch (insn.type) {
             case 0:
             case 1:
