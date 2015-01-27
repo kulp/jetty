@@ -67,6 +67,8 @@ public class VGATextDevice implements MappedDevice {
 
             for (int row = 0; row < SCREEN_ROWS; row++) {
                 for (int col = 0; col < SCREEN_COLS; col++) {
+                    // TODO make every putGlyph() call update a texture, then
+                    // blit that to the canvas on paint()
                     putGlyph(g, row, col, store[col][row]);
                 }
             }
@@ -88,8 +90,10 @@ public class VGATextDevice implements MappedDevice {
     }
 
     private void setGlyph(int row, int col, int rhs) {
-        // TODO Auto-generated method stub
-
+        if (col < SCREEN_COLS && row < SCREEN_ROWS) {
+            store[col][row] = (byte) (rhs & 255);
+            canvas.repaint();
+        }
     }
 
     @Override

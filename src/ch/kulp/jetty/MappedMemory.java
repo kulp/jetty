@@ -6,6 +6,7 @@ public class MappedMemory implements MappedDevice {
 
     public MappedMemory(int base, int pagesize) {
         this.base = base;
+        // TODO enforce power of two pagesize for faster address lookup
         this.store = new int[pagesize];
     }
 

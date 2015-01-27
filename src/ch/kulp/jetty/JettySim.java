@@ -8,7 +8,6 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import ch.kulp.jetty.TenyrMappedObjectReader.Record;
-import ch.kulp.jetty.devices.VGATextDevice;
 
 interface JettyRunner {
     int run(BasicBlock bb);
@@ -131,7 +130,6 @@ public class JettySim {
 
     public static void main(String[] args) {
         try {
-            new VGATextDevice();
             new JettySim(args[0]).run();
         } catch (IOException e) {
             // TODO Auto-generated catch block
