@@ -7,6 +7,7 @@ import static ch.kulp.jetty.Operation.COMPARE_LT;
 import java.util.TreeMap;
 import java.util.function.Function;
 
+import ch.kulp.jetty.devices.LEDDisplayDevice;
 import ch.kulp.jetty.devices.VGATextDevice;
 
 public final class MachineState {
@@ -38,6 +39,11 @@ public final class MachineState {
         int length = vga.getMappedLength();
         for (int page = base; page < base + length; page += PAGESIZE)
             memoryMap.put(page, vga);
+    }
+
+    {
+        LEDDisplayDevice led = new LEDDisplayDevice();
+        memoryMap.put(led.getMappedBase(), led);
     }
 
     public int fetch(int addr) {
