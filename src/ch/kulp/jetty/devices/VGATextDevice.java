@@ -63,15 +63,7 @@ public class VGATextDevice implements MappedDevice {
     public class VGATextCanvas extends Canvas {
         @Override
         public void paint(Graphics g) {
-            g.setColor(Color.WHITE);
-
-            for (int row = 0; row < SCREEN_ROWS; row++) {
-                for (int col = 0; col < SCREEN_COLS; col++) {
-                    // TODO make every putGlyph() call update a texture, then
-                    // blit that to the canvas on paint()
-                    putGlyph(g, row, col, store[col][row]);
-                }
-            }
+            g.drawImage(backingImage, 0, 0, Color.WHITE, null);
         }
     }
 
@@ -92,6 +84,8 @@ public class VGATextDevice implements MappedDevice {
     private void setGlyph(int row, int col, int rhs) {
         if (col < SCREEN_COLS && row < SCREEN_ROWS) {
             store[col][row] = (byte) (rhs & 255);
+            putGlyph(backingImage.getGraphics(), row, col, store[col][row]);
+            // TODO make a thread that repaints the canvas at 60Hz
             canvas.repaint();
         }
     }
