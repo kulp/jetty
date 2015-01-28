@@ -47,6 +47,7 @@ public class LEDDisplayDevice implements MappedDevice {
         frame.pack();
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
+        frame.setLocation(0, 0);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
