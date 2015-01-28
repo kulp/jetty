@@ -152,7 +152,7 @@ public class JettySim {
         for (Record record : reader.getRecords()) {
             int[] words = record.asWords();
             for (int i = record.addr; i < record.addr + record.size; i++) {
-                int word = words[i];
+                int word = words[i - record.addr];
                 ms.store(i + SIMULATOR_LOAD_ADDRESS, word);
             }
         }
