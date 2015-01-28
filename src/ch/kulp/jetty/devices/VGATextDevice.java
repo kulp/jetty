@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import ch.kulp.jetty.MappedDevice;
 
 public class VGATextDevice implements MappedDevice {
+    private static final int REFRESH_HZ = 60;
     public static final int SCREEN_ROWS = 40, SCREEN_COLS = 80;
     protected static final int FONT_PIXEL_HEIGHT = 12, FONT_PIXEL_WIDTH = 8;
     private static final int BASE_ADDR = 0x10000;
@@ -24,6 +25,7 @@ public class VGATextDevice implements MappedDevice {
     protected JFrame frame = new JFrame(getClass().getSimpleName());
     final protected Dimension screenSize = new Dimension(640, 480);
     byte store[][] = new byte[SCREEN_COLS][SCREEN_ROWS];
+    protected Thread refresher;
 
     {
         try {
@@ -45,6 +47,20 @@ public class VGATextDevice implements MappedDevice {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+
+        refresher = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(1000 / REFRESH_HZ);
+                    } catch (InterruptedException e) {
+                    }
+                    canvas.repaint();
+                }
+            }
+        }, getClass().getSimpleName() + " refresher");
+        refresher.start();
     }
 
     public void putGlyph(int row, int col, int glyphIndex) {
@@ -85,8 +101,6 @@ public class VGATextDevice implements MappedDevice {
         if (col < SCREEN_COLS && row < SCREEN_ROWS) {
             store[col][row] = (byte) (rhs & 255);
             putGlyph(backingImage.getGraphics(), row, col, store[col][row]);
-            // TODO make a thread that repaints the canvas at 60Hz
-            canvas.repaint();
         }
     }
 
