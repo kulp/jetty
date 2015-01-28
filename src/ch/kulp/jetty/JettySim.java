@@ -64,8 +64,8 @@ class JettyInterp implements JettyRunner {
             case MULTIPLY:          rhs = (e2  *  e1) + e0; break;
 
             case SHIFT_LEFT:        rhs = (e2  << e1) + e0; break;
-            case SHIFT_RIGHT_ARITH: rhs = (e2 >>> e1) + e0; break;
-            case SHIFT_RIGHT_LOGIC: rhs = (e2  >> e1) + e0; break;
+            case SHIFT_RIGHT_ARITH: rhs = (e2  >> e1) + e0; break;
+            case SHIFT_RIGHT_LOGIC: rhs = (e2 >>> e1) + e0; break;
 
             case BITWISE_AND:       rhs = (e2  &  e1) + e0; break;
             case BITWISE_ANDN:      rhs = (e2  &~ e1) + e0; break;
