@@ -23,7 +23,8 @@ public class VGATextDevice implements MappedDevice {
     protected BufferedImage backingImage = new BufferedImage(SCREEN_COLS * FONT_PIXEL_WIDTH, SCREEN_ROWS
             * FONT_PIXEL_HEIGHT, BufferedImage.TYPE_INT_RGB);
     protected JFrame frame = new JFrame(getClass().getSimpleName());
-    final protected Dimension screenSize = new Dimension(640, 480);
+    final protected Dimension screenSize = new Dimension(FONT_PIXEL_WIDTH * SCREEN_COLS, FONT_PIXEL_HEIGHT
+            * SCREEN_ROWS);
     byte store[][] = new byte[SCREEN_COLS][SCREEN_ROWS];
     protected Thread refresher;
 
