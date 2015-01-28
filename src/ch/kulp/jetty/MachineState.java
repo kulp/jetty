@@ -29,15 +29,15 @@ public final class MachineState {
     TreeMap<Integer, MappedDevice> memoryMap = new TreeMap<Integer, MappedDevice>();
 
     public int fetch(int addr) {
-        return vivifyBlock(addr).fetch(addr & (PAGESIZE - 1));
+        return vivifyBlock(addr).fetch(addr);
     }
 
     public void store(int addr, int rhs) {
-        vivifyBlock(addr).store(addr & (PAGESIZE - 1), rhs);
+        vivifyBlock(addr).store(addr, rhs);
     }
 
     private MappedDevice vivifyBlock(int addr) {
-        Function<Integer, MappedDevice> lambda = k -> new MappedMemory(addr & (PAGESIZE - 1), PAGESIZE);
+        Function<Integer, MappedDevice> lambda = k -> new MappedMemory(addr & ~(PAGESIZE - 1), PAGESIZE);
         return memoryMap.computeIfAbsent(addr & ~(PAGESIZE - 1), lambda);
     }
 }

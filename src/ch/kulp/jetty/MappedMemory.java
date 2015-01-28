@@ -11,12 +11,12 @@ public class MappedMemory implements MappedDevice {
 
     @Override
     public int fetch(int addr) {
-        return store[addr];
+        return store[addr - base];
     }
 
     @Override
     public void store(int addr, int rhs) {
-        store[addr] = rhs;
+        store[addr - base] = rhs;
     }
 
     @Override
