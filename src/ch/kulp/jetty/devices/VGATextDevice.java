@@ -79,7 +79,7 @@ public class VGATextDevice implements MappedDevice {
     public class VGATextCanvas extends Canvas {
         @Override
         public void paint(Graphics g) {
-            g.drawImage(backingImage, 0, 0, Color.WHITE, null);
+            g.drawImage(backingImage, 0, 0, Color.BLACK, null);
         }
     }
 
