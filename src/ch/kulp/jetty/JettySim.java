@@ -87,13 +87,13 @@ class JettyInterp implements JettyRunner {
                 ms.regs[insn.Z] = rhs;
                 break;
             case 0b01:
-                ms.regs[insn.Z] = ms.fetch(rhs);
+                ms.store(rhs, ms.regs[insn.Z]);
                 break;
             case 0b10:
                 ms.store(ms.regs[insn.Z], rhs);
                 break;
             case 0b11:
-                ms.store(rhs, ms.regs[insn.Z]);
+                ms.regs[insn.Z] = ms.fetch(rhs);
                 break;
         }
 

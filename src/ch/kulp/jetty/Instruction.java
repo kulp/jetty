@@ -5,7 +5,7 @@ public class Instruction {
     Operation op;
 
     boolean doesUpdateP() {
-        return ((dd & 2) == 0) && Z == 15;
+        return ((dd & 0b10) == 0) && Z == 15;
     }
 
     @Override
@@ -22,7 +22,7 @@ public class Instruction {
 
         sb.append(' ');
 
-        if (dd == 0b11)
+        if (dd == 0b01)
             sb.append("->");
         else
             sb.append("<-");

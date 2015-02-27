@@ -233,8 +233,9 @@ public class JitRunner implements JettyRunner {
                 units.add(setReg(body, insn.Z, rhs));
                 break;
             case 0b01: {
-                VirtualInvokeExpr invocation = Jimple.v().newVirtualInvokeExpr(msRef, toFetch, asImm(body, rhs));
-                units.add(setReg(body, insn.Z, invocation));
+                VirtualInvokeExpr invocation = Jimple.v().newVirtualInvokeExpr(msRef, toStore, asImm(body, rhs),
+                        getReg(bb, body, insn.Z, offset));
+                units.add(Jimple.v().newInvokeStmt(invocation));
                 break;
             }
             case 0b10: {
@@ -244,9 +245,8 @@ public class JitRunner implements JettyRunner {
                 break;
             }
             case 0b11: {
-                VirtualInvokeExpr invocation = Jimple.v().newVirtualInvokeExpr(msRef, toStore, asImm(body, rhs),
-                        getReg(bb, body, insn.Z, offset));
-                units.add(Jimple.v().newInvokeStmt(invocation));
+                VirtualInvokeExpr invocation = Jimple.v().newVirtualInvokeExpr(msRef, toFetch, asImm(body, rhs));
+                units.add(setReg(body, insn.Z, invocation));
                 break;
             }
         }
