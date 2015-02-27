@@ -5,7 +5,7 @@ public class Instruction {
     Operation op;
 
     boolean doesUpdateP() {
-        return ((dd & 0b10) == 0) && Z == 15;
+        return dd != 0b00 && dd != 0b11 && Z == 15;
     }
 
     @Override
@@ -107,9 +107,10 @@ public class Instruction {
                 insn.I = (word & 0xfff) | -(word & 0x800); // sign extend
                 break;
             case 3:
-                insn.X = insn.Y = 0;
+                insn.X = (word >> 20) & 0xf;
+                insn.Y = 0;
                 insn.op = Operation.BITWISE_OR;
-                insn.I = (word & 0xffffff) | -(word & 0x800000); // sign extend
+                insn.I = (word & 0xfffff) | -(word & 0x80000); // sign extend
         }
 
         return insn;

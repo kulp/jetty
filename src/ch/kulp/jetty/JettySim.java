@@ -52,7 +52,7 @@ class JettyInterp implements JettyRunner {
                 break;
             case 3:
                 e0 = insn.I;
-                e1 = 0;
+                e1 = ms.regs[insn.X];
                 e2 = 0;
                 break;
         }
@@ -108,7 +108,7 @@ class JettyInterp implements JettyRunner {
         int lastP;
         do {
             lastP = bb.ms.regs[15];
-            // System.out.format("IP = 0x%08x\n", ms.regs[15]);
+            // System.out.format("IP = 0x%08x\n", bb.ms.regs[15]);
         } while (!step(bb.ms));
         return lastP;
     }

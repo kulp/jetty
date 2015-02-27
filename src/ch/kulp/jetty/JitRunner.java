@@ -195,7 +195,7 @@ public class JitRunner implements JettyRunner {
                 break;
             case 3:
                 A = INTEGER_ZERO;
-                B = INTEGER_ZERO;
+                B = getReg(bb, body, insn.X, offset);
                 C = IntConstant.v(insn.I);
                 break;
         }
